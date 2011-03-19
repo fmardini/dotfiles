@@ -1,4 +1,7 @@
-
+(let* ((my-lisp-dir "~/.emacs.d/")
+       (default-directory my-lisp-dir))
+  (setq load-path (cons my-lisp-dir load-path))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;;; This was installed by package-install.el.
 ;;; This provides support for the package system and
@@ -54,3 +57,7 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (global-linum-mode t)
+
+(setq inhibit-splash-screen t)
+
+(require 'setup-elpa)
