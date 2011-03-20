@@ -75,3 +75,8 @@
             (load "dired-x")))
 ;; js-mode
 (setq js-indent-level 2)
+
+(autoload 'scheme-mode "cmuscheme" nil t)
+(autoload 'run-scheme "cmuscheme" "Switch to interactive Scheme buffer." t)
+(add-hook 'scheme-mode-hook 'turn-on-font-lock)
+(setq scheme-program-name "scheme48")
