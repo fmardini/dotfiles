@@ -61,3 +61,15 @@
 (setq inhibit-splash-screen t)
 
 (require 'setup-elpa)
+
+;; AUCTeX ;; ADD CODE TO CHECK IF AVAILABLE
+(load "auctex.el" nil t t)
+(load "preview-latex.el" nil t t)
+(add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+
+;; Dired-X
+(add-hook 'dired-load-hook
+          (lambda ()
+            (load "dired-x")))

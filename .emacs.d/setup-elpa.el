@@ -5,8 +5,8 @@
 (defvar starter-kit-packages (list 'ruby-mode
                                    'inf-ruby
                                    'css-mode
+                                   'haml-mode
                                    'yaml-mode
-                                   'js2-mode
                                    'magit)
   "Libraries that should be installed by default.")
 
