@@ -73,3 +73,5 @@
 (add-hook 'dired-load-hook
           (lambda ()
             (load "dired-x")))
+;; js-mode
+(setq js-indent-level 2)
