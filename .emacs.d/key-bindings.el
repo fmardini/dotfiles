@@ -34,3 +34,5 @@
   (next-line arg))
 
 (global-set-key (kbd "C-x C-y") 'duplicate-line)
+
+(provide 'key-bindings)
