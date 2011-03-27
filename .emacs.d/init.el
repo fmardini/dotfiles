@@ -61,6 +61,7 @@
 (setq inhibit-splash-screen t)
 
 (require 'setup-elpa)
+(require 'key-bindings)
 
 ;; AUCTeX ;; ADD CODE TO CHECK IF AVAILABLE
 (load "auctex.el" nil t t)
