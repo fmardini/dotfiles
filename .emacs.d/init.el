@@ -16,6 +16,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (setq make-backup-files nil)
+(setq show-trailing-whitespace t)
 
 (delete-selection-mode 1)
 
@@ -25,7 +26,7 @@
 
 (setq completion-ignore-case t
       read-file-name-completion-ignore-case t)
-;; C-x n {n, w, p, d} {region, widen(whole buffer), page, defun} 
+;; C-x n {n, w, p, d} {region, widen(whole buffer), page, defun}
 (put 'narrow-to-region 'disabled nil)
 
 (ido-mode t)
