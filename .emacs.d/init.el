@@ -17,7 +17,7 @@
 (tool-bar-mode -1)
 (setq make-backup-files nil)
 (setq show-trailing-whitespace t)
-
+(setq x-select-enable-clipboard t)
 (delete-selection-mode 1)
 
 (setq search-highlight t
