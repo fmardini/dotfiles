@@ -78,6 +78,9 @@
 ;; js-mode
 (setq js-indent-level 2)
 
+;; ruby mode
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+
 (autoload 'scheme-mode "cmuscheme" nil t)
 (autoload 'run-scheme "cmuscheme" "Switch to interactive Scheme buffer." t)
 (add-hook 'scheme-mode-hook 'turn-on-font-lock)
