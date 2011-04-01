@@ -16,9 +16,9 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (setq make-backup-files nil)
-(setq show-trailing-whitespace t)
 (setq x-select-enable-clipboard t)
 (delete-selection-mode 1)
+(setq show-trailing-whitespace t)
 
 (setq search-highlight t
       query-replace-highlight t)
@@ -71,17 +71,23 @@
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 
+;; magit
+(require 'magit)
+
 ;; Dired-X
 (add-hook 'dired-load-hook
           (lambda ()
             (load "dired-x")))
+
 ;; js-mode
 (setq js-indent-level 2)
 
 ;; ruby mode
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(setq ruby-insert-encoding-magic-comment nil)
 
 (autoload 'scheme-mode "cmuscheme" nil t)
 (autoload 'run-scheme "cmuscheme" "Switch to interactive Scheme buffer." t)
 (add-hook 'scheme-mode-hook 'turn-on-font-lock)
 (setq scheme-program-name "scheme48")
+

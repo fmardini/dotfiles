@@ -6,8 +6,7 @@
                                    'inf-ruby
                                    'css-mode
                                    'haml-mode
-                                   'yaml-mode
-                                   'magit)
+                                   'yaml-mode)
   "Libraries that should be installed by default.")
 
 (defun starter-kit-elpa-install ()
