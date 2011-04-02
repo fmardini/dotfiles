@@ -72,7 +72,7 @@
 (setq TeX-parse-self t)
 
 ;; magit
-(require 'magit)
+(require 'magit "magit" 'noerror)
 
 ;; Dired-X
 (add-hook 'dired-load-hook
