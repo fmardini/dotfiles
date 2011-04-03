@@ -91,3 +91,5 @@
 (add-hook 'scheme-mode-hook 'turn-on-font-lock)
 (setq scheme-program-name "scheme48")
 
+;; FlyMake
+(require 'flymake-conf)
