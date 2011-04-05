@@ -93,3 +93,6 @@
 
 ;; FlyMake
 (require 'flymake-conf)
+
+;; vimpuluse
+(require 'vimpulse)
