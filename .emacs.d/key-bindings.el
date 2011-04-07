@@ -47,5 +47,7 @@
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
+(global-set-key (kbd "C-c p") 'flymake-goto-prev-error)
+(global-set-key (kbd "C-c n") 'flymake-goto-next-error)
 
 (provide 'key-bindings)

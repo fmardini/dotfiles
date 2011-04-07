@@ -93,6 +93,9 @@
 
 ;; FlyMake
 (require 'flymake-conf)
+(require 'flymake-jslint)
+(add-hook 'javascript-mode-hook
+          (lambda () (flymake-mode t)))
 
 ;; vimpuluse
 (require 'vimpulse)
