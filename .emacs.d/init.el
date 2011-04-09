@@ -8,10 +8,12 @@
 ;;; interfacing with ELPA, the package archive.
 ;;; Move this code earlier if you want to reference
 ;;; packages in your .emacs.
+
 (when
     (load
      (expand-file-name "~/.emacs.d/elpa/package.el"))
   (package-initialize))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -55,8 +57,6 @@
       savehist-file "~/.emacs.d/.savehist")
 (savehist-mode t)
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
 (global-linum-mode t)
 
 (setq inhibit-splash-screen t)
@@ -99,3 +99,8 @@
 
 ;; vimpuluse
 (require 'vimpulse)
+
+(defun turn-on-paredit () (paredit-mode 1))
+(add-hook 'scheme-mode-hook     'turn-on-paredit)
+(add-hook 'lisp-mode-hook       'turn-on-paredit)
+(add-hook 'emacs-lisp-mode-hook 'turn-on-paredit)

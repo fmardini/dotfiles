@@ -50,4 +50,7 @@
 (global-set-key (kbd "C-c p") 'flymake-goto-prev-error)
 (global-set-key (kbd "C-c n") 'flymake-goto-next-error)
 
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
 (provide 'key-bindings)
+
