@@ -24,4 +24,5 @@
              (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
                       (flymake-mode))))
 
+(add-hook 'js-mode-hook 'flymake-mode)
 (provide 'flymake-conf)
