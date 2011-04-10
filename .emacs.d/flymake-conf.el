@@ -1,8 +1,8 @@
 (require 'flymake)
 
-;; I don't like the default colors :)
-(set-face-background 'flymake-errline "red4")
-(set-face-background 'flymake-warnline "dark slate blue")
+(custom-set-faces
+ '(flymake-errline ((((class color)) (:background "LightYellow" :underline "OrangeRed"))))
+ '(flymake-warnline ((((class color)) (:background "LightBlue2" :underline "Yellow")))))
 
 ;; Invoke ruby with '-c' to get syntax checking
 (defun flymake-ruby-init ()
