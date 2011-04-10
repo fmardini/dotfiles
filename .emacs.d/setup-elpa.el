@@ -5,6 +5,7 @@
 (defvar starter-kit-packages (list 'ruby-mode
                                    'inf-ruby
                                    'css-mode
+                                   'paredit
                                    'haml-mode
                                    'yaml-mode)
   "Libraries that should be installed by default.")

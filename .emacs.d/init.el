@@ -100,6 +100,8 @@
 ;; vimpuluse
 (require 'vimpulse)
 
+;; paredit
+(require 'paredit)
 (defun turn-on-paredit () (paredit-mode 1))
 (add-hook 'scheme-mode-hook     'turn-on-paredit)
 (add-hook 'lisp-mode-hook       'turn-on-paredit)
