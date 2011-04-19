@@ -20,7 +20,7 @@
 (setq make-backup-files nil)
 (setq x-select-enable-clipboard t)
 (delete-selection-mode 1)
-(setq show-trailing-whitespace t)
+(setq-default show-trailing-whitespace t)
 
 (setq search-highlight t
       query-replace-highlight t)
