@@ -18,6 +18,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (setq make-backup-files nil)
+(column-number-mode t)
 (setq x-select-enable-clipboard t)
 (delete-selection-mode 1)
 (setq-default show-trailing-whitespace t)
