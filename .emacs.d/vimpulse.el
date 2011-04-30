@@ -672,6 +672,11 @@
 (and (fboundp 'global-undo-tree-mode)
      (global-undo-tree-mode 1))
 
+;; load goto-chg.el if available
+(condition-case nil
+    (require 'goto-chg)
+  (error nil))
+
 ;;; Customization group for Vimpulse
 
 (defgroup vimpulse nil
@@ -1020,11 +1025,8 @@ The topmost modes have the highest priority.")
     (vimpulse-configure-variables)
   (add-hook 'after-init-hook 'vimpulse-configure-variables))
 
-(provide 'vimpulse-dependencies)
 ;;;; Redefinitions of some of Viper's functions
 
-(require 'vimpulse-dependencies)
-(eval-when-compile (require 'vimpulse-utils))   ; vimpulse-unquote
 
 (defalias 'viper-digit-argument 'digit-argument)
 
@@ -1062,7 +1064,8 @@ The topmost modes have the highest priority.")
 
 (defadvice viper-exit-insert-state (before vimpulse activate)
   "Refresh `vimpulse-exit-point'."
-  (viper-move-marker-locally 'vimpulse-exit-point (point)))
+  (let (abbrev-mode)
+    (viper-move-marker-locally 'vimpulse-exit-point (point))))
 
 (defun vimpulse-set-replace-cursor-type ()
   "Display a horizontal bar cursor."
@@ -1966,7 +1969,8 @@ mode-specific modifications to %s.\n\n%s" state-name doc) t))
 (when (fboundp 'font-lock-add-keywords)
   (font-lock-add-keywords
    'emacs-lisp-mode
-   '(("(\\(vimpulse-define-[-[:word:]]+\\)\\>[ \f\t\n\r\v]*\\(\\sw+\\)?"
+   '(("(\\(vimpulse-define-\\(?:[^ k][^ e][^ y]\\|[-[:word:]]\\{4,\\}\\)\\)\
+\\>[ \f\t\n\r\v]*\\(\\sw+\\)?"
       (1 font-lock-keyword-face)
       (2 font-lock-function-name-face nil t)))))
 
@@ -2220,11 +2224,9 @@ docstring. The variable becomes buffer-local whenever set.")
 
 (defalias 'ex-cmd-read-exit 'vimpulse-ex-cmd-read-exit)
 
-(provide 'vimpulse-viper-function-redefinitions)
 ;;;; General utility code used by all of Vimpulse;
 ;;;; may be useful to the end user
 
-(require 'vimpulse-dependencies)
 
 ;; macro helper
 (eval-and-compile
@@ -2997,7 +2999,6 @@ beginning of a line, a different type of range is returned:
        (t
         (vimpulse-make-motion-range beg end 'exclusive))))))
 
-(provide 'vimpulse-utils)
 ;;;; Modal keybinding functions
 
 ;; Functions for making state bindings (modal bindings).
@@ -3032,8 +3033,6 @@ beginning of a line, a different type of range is returned:
 ;; `vimpulse-global-set-key', `vimpulse-local-set-key' or
 ;; `vimpulse-define-key'. `vimpulse-map' etc. are always careful.
 
-(require 'vimpulse-viper-function-redefinitions)
-(eval-when-compile (require 'vimpulse-utils)) ; v-{with-state,strip-prefix,truncate}
 
 ;;; Variables
 (defvar vimpulse-last-command-event nil
@@ -3479,10 +3478,8 @@ You would typically use this in a mode hook. To make a global
 binding, use `vimpulse-omap'."
   (vimpulse-map-state-local 'visual-state key def))
 
-(provide 'vimpulse-modal)
 ;;;; Ex commands
 
-(require 'vimpulse-dependencies) ; ex-token-alist, v-want-quit-like-Vim
 
 (defvar vimpulse-extra-ex-commands
   '(("b" "buffer")
@@ -3518,7 +3515,6 @@ binding, use `vimpulse-omap'."
         (delete (assoc (car entry) ex-token-alist) ex-token-alist))
   (push entry ex-token-alist))
 
-(provide 'vimpulse-ex)
 ;;;; Paren matching
 
 ;; When highlighting matching parentheses, Emacs matches the closing
@@ -3534,9 +3530,7 @@ binding, use `vimpulse-omap'."
 ;; To avoid loading it, set `vimpulse-enhanced-paren-matching' to nil
 ;; in your .emacs before loading Vimpulse.
 
-(require 'vimpulse-dependencies)        ; vimpulse-setq etc.
 
-(declare-function vimpulse-delete-overlay "vimpulse-utils" (overlay))
 
 (defvar show-paren-delay)
 (defvar vimpulse-paren-overlay-open nil
@@ -3664,7 +3658,6 @@ or mismatched paren."
    (t
     ad-do-it)))
 
-(provide 'vimpulse-paren-matching)
 ;;;; Visual mode
 
 ;; Visual mode is defined as another Viper state, just like vi state,
@@ -3691,12 +3684,7 @@ or mismatched paren."
 ;; write your own utilities using the rect.el library. Alternatively,
 ;; use the `vimpulse-apply-on-block' function.
 
-(eval-when-compile (require 'vimpulse-viper-function-redefinitions)) ; vimpulse-define-state
-(eval-when-compile (require 'vimpulse-utils)) ; vimpulse-remap
 
-(declare-function vimpulse-delete "vimpulse-operator" (beg end &optional dont-save))
-(declare-function vimpulse-mark-range "vimpulse-text-object-system" (range &optional widen type))
-(declare-function vimpulse-operator-cmd-p "vimpulse-operator" (cmd))
 
 (defgroup vimpulse-visual nil
   "Visual mode for Viper."
@@ -4906,7 +4894,6 @@ removed afterwards with `vimpulse-visual-block-cleanup-whitespace'."
     (vimpulse-delete-overlay vimpulse-visual-whitespace-overlay)
     (setq vimpulse-visual-whitespace-overlay nil)))
 
-(provide 'vimpulse-visual-mode)
 ;;;; Operator-Pending mode
 
 ;; This provides a framework for combining "motions" and "operators".
@@ -4957,9 +4944,6 @@ removed afterwards with `vimpulse-visual-block-cleanup-whitespace'."
 ;; what he thinks about this. For what it's worth, the following code
 ;; addresses "TODO item #1" in viper.el.
 
-(require 'vimpulse-utils)
-(require 'vimpulse-visual-mode)
-(eval-when-compile (require 'vimpulse-viper-function-redefinitions)) ; vimpulse-define-state
 
 (vimpulse-define-state operator
   "Operator-pending mode is when an operator is pending,
@@ -6042,7 +6026,6 @@ type TYPE. A custom function body may be specified via BODY."
 (put 'next-line 'motion-type 'line)
 (put 'previous-line 'motion-type 'line)
 
-(provide 'vimpulse-operator)
 ;;;; Text objects support
 
 ;; The following code implements support for text objects and commands
@@ -6059,10 +6042,7 @@ type TYPE. A custom function body may be specified via BODY."
 ;; Viper's movement commands. More objects are easily added with
 ;; `vimpulse-define-text-object'.
 
-(eval-when-compile (require 'vimpulse-utils)) ; vimpulse-unquote
-(require 'vimpulse-visual-mode)         ; v-v-{activate,expand-region,select}
 
-(declare-function vimpulse-calculate-motion-range "vimpulse-operator" (count motion &optional type refresh))
 
 (defvar vimpulse-operator-basic-map)    ; defined programmatically by `v-define-state'
 
@@ -6595,15 +6575,9 @@ specifies whether to include the quote marks in the range."
   :keys "i\""
   (vimpulse-quote-range arg ?\"))
 
-(provide 'vimpulse-text-object-system)
 ;;;; Keybindings
 
-(require 'vimpulse-dependencies)
-(require 'vimpulse-modal)
-(require 'vimpulse-visual-mode) ; vimpulse-apply-on-block, vimpulse-visual-mode
 
-(declare-function vimpulse-range "vimpulse-operator" (&optional no-repeat dont-move-point whole-lines keep-visual custom-motion))
-(declare-function vimpulse-set-replace-cursor-type "vimpulse-viper-function-redefinitions" nil)
 
 ;;; C-u
 
@@ -6663,6 +6637,12 @@ specifies whether to include the quote marks in the range."
 (vimpulse-map "]P" 'vimpulse-Put-and-indent)
 (vimpulse-map "]p" 'vimpulse-put-and-indent)
 
+;; go to last change
+(when (fboundp 'goto-last-change)
+  (define-key viper-vi-basic-map "g;" 'goto-last-change))
+(when (fboundp 'goto-last-change-reverse)
+  (define-key viper-vi-basic-map "g," 'goto-last-change-reverse))
+
 ;; Visual bindings
 (define-key viper-vi-basic-map "v" 'vimpulse-visual-toggle-char)
 (define-key viper-vi-basic-map "V" 'vimpulse-visual-toggle-line)
@@ -6708,6 +6688,10 @@ Equivalent to Vim's C-w prefix.")
 (define-key viper-insert-basic-map [delete] 'delete-char) ; <delete> key
 ;; make ^[ work
 (define-key viper-insert-basic-map (kbd "ESC") 'viper-exit-insert-state)
+;; paste
+(define-key viper-insert-basic-map "\C-r" 'vimpulse-paste-in-insert)
+;; temporarily escape to vi state
+(define-key viper-insert-basic-map "\C-o" 'viper-escape-to-vi)
 
 ;;; "
 
@@ -7202,11 +7186,18 @@ COL defaults to the current column."
 (define-key viper-insert-basic-map "\C-y" 'vimpulse-copy-from-above)
 (define-key viper-insert-basic-map "\C-e" 'vimpulse-copy-from-below)
 
-(provide 'vimpulse-misc-keybindings)
+;; paste in Insert state by pressing "C-r <register>"
+(defun vimpulse-paste-in-insert (register)
+  "Paste in Insert state from REGISTER."
+  (interactive (list (read-char)))
+  (if (viper-valid-register register)
+      (setq viper-use-register register)
+    (setq viper-use-register nil))
+  (viper-Put-back nil)
+  (forward-char))
+
 ;;;; This code integrates Viper with the outside world
 
-(require 'vimpulse-utils)
-(require 'vimpulse-viper-function-redefinitions)
 
 ;;; undo-tree.el
 
@@ -7535,18 +7526,6 @@ Disable anyway if FORCE is t."
        (define-key viper-vi-basic-map "zc" 'hs-hide-block))
      (add-hook 'hs-minor-mode-hook 'vimpulse-hs-setup)))
 
-(provide 'vimpulse-compatibility)
-(require 'vimpulse-dependencies)
-(require 'vimpulse-viper-function-redefinitions)
-(require 'vimpulse-utils)
-(require 'vimpulse-modal)
-(require 'vimpulse-ex)
-(require 'vimpulse-paren-matching)
-(require 'vimpulse-visual-mode)
-(require 'vimpulse-operator)
-(require 'vimpulse-text-object-system)
-(require 'vimpulse-misc-keybindings)
-(require 'vimpulse-compatibility)
 (provide 'vimpulse)
 
 ;;; vimpulse.el ends here

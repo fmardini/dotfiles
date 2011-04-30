@@ -100,6 +100,15 @@
 
 ;; vimpuluse
 (require 'vimpulse)
+;; emacs in insert
+(setq viper-want-emacs-keys-in-insert t)
+;; disable vi keys in minibuffer
+(remove-hook 'minibuffer-setup-hook 'viper-minibuffer-setup-sentinel)
+(defadvice viper-set-minibuffer-overlay (around vimpulse activate) nil)
+(define-key minibuffer-local-map (kbd "ESC") 'abort-recursive-edit)
+;; comment/uncomment
+(vimpulse-vmap ",c" 'comment-dwim)
+
 
 ;; paredit
 (require 'paredit)
