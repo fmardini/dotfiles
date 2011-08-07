@@ -109,6 +109,8 @@
 ;; comment/uncomment
 (vimpulse-vmap ",c" 'comment-dwim)
 
+;; Go Lang
+(require 'go-mode-load)
 
 ;; paredit
 (require 'paredit)
