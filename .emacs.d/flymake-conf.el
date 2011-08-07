@@ -1,7 +1,7 @@
 (require 'flymake)
 
 (custom-set-faces
- '(flymake-errline ((((class color)) (:background "LightYellow" :underline "OrangeRed"))))
+ '(flymake-errline ((((class color)) (:underline "OrangeRed"))))
  '(flymake-warnline ((((class color)) (:background "LightBlue2" :underline "Yellow")))))
 
 ;; Invoke ruby with '-c' to get syntax checking

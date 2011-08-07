@@ -108,9 +108,15 @@
 (define-key minibuffer-local-map (kbd "ESC") 'abort-recursive-edit)
 ;; comment/uncomment
 (vimpulse-vmap ",c" 'comment-dwim)
+(setq viper-shift-width 2)
 
 ;; Go Lang
 (require 'go-mode-load)
+
+;; color theme
+(require 'color-theme)
+(require 'color-theme-ir-black)
+(color-theme-ir-black)
 
 ;; paredit
 (require 'paredit)
