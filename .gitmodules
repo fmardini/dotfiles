@@ -1,3 +1,0 @@
-[submodule ".emacs.d/lintnode"]
-	path = .emacs.d/lintnode
-	url = git://github.com/keturn/lintnode.git
