@@ -15,7 +15,6 @@ alias app2='ssh -i $HOME/.ssh/local_rsa -p 788 boundless@92.52.120.42'
 alias app3='ssh -i $HOME/.ssh/local_rsa -p 788 boundless@92.52.120.43'
 alias emacs_clean='find . -name "*~" -exec rm {} \;'
 
-PS1="%2c$PR_NO_COLOR%(!.#.$) "
 export EDITOR=vim
 
 if [ -x /usr/bin/dircolors ]; then
@@ -29,6 +28,12 @@ fi
 
 autoload -U compinit
 compinit
+zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
+zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
+
+PS1="%2c$PR_NO_COLOR%(!.#.$) "
+autoload -U promptinit
+promptinit
 
 setopt autocd
 setopt auto_pushd
@@ -39,8 +44,9 @@ setopt extendedglob
 alias emacs='emacs -nw'
 
 HISTFILE=~/.zsh-history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
+setopt hist_ignore_space
 
 export JAWAKER_DIR=$HOME/workspace/projects/jawaker
 export AKHTABOOT_DIR=$HOME/workspace/projects/akhtaboot
