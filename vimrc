@@ -38,7 +38,7 @@ au FileType make                                     set noexpandtab
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
 
 " make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-au FileType python  set tabstop=4 textwidth=79
+au FileType python  set tabstop=4 textwidth=79 shiftwidth=4 softtabstop=4
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
